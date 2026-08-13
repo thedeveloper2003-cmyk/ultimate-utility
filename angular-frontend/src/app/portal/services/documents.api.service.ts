@@ -13,33 +13,105 @@ const PREVIEW_MIME_WHITELIST = [
   'application/pdf'
 ];
 
+// localStorage persistence
+const STORAGE_KEY = 'mock_documents_v1';
+const STORAGE_SCHEMA_VERSION = 1;
+
+interface PersistedDocuments {
+  schemaVersion: number;
+  docs: Document[];
+  versions: DocumentVersion[];
+  persistedAt: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class DocumentsApiService {
   private docs$ = new BehaviorSubject<Document[] | null>(null);
   private versions$ = new BehaviorSubject<DocumentVersion[] | null>(null);
+  private seedsLoaded = false;
 
   constructor(private http: HttpClient) {}
 
   // Initialize seed data for docs and versions if not yet populated
   private ensureSeedsLoaded(): void {
-    if (!this.docs$.value) {
-      // try loading seed JSON from assets
-      this.http.get<Document[]>('/assets/mock-data/documents.json').subscribe(
-        (d) => this.docs$.next(d || []),
-        () => this.docs$.next([]),
-      );
+    if (this.seedsLoaded) return;
+
+    // 1. Try load from localStorage first
+    const persisted = this.loadFromStorage();
+    if (persisted) {
+      this.docs$.next(persisted.docs || []);
+      this.versions$.next(persisted.versions || []);
+      // Attempt to regenerate previews for persisted versions that lack them
+      (persisted.versions || []).forEach((ver) => this.maybeGeneratePreviewForVersion(ver));
+      this.seedsLoaded = true;
+      return;
     }
-    if (!this.versions$.value) {
-      this.http.get<DocumentVersion[]>('/assets/mock-data/document-versions.json').subscribe(
-        (v) => {
-          // attempt to generate previews for small files
-          (v || []).forEach((ver) => { ver.isPreviewAvailable = false; ver.previewBase64 = null; });
-          this.versions$.next(v || []);
-          // for each version eligible, kick off async preview generation
-          (v || []).forEach((ver) => this.maybeGeneratePreviewForVersion(ver));
-        },
-        () => this.versions$.next([]),
-      );
+
+    // 2. Fallback to seed JSON assets
+    this.http.get<Document[]>('/assets/mock-data/documents.json').subscribe(
+      (d) => {
+        this.docs$.next(d || []);
+        // persist initial seed to localStorage for future runtime persistence
+        this.persistToStorage(d || [], this.versions$.value || []);
+      },
+      () => this.docs$.next([]),
+    );
+
+    this.http.get<DocumentVersion[]>('/assets/mock-data/document-versions.json').subscribe(
+      (v) => {
+        (v || []).forEach((ver) => { ver.isPreviewAvailable = false; ver.previewBase64 = null; });
+        this.versions$.next(v || []);
+        // for each version eligible, kick off async preview generation
+        (v || []).forEach((ver) => this.maybeGeneratePreviewForVersion(ver));
+        // persist initial seed
+        this.persistToStorage(this.docs$.value || [], v || []);
+      },
+      () => this.versions$.next([]),
+    );
+
+    this.seedsLoaded = true;
+  }
+
+  // Persistence helpers
+  private loadFromStorage(): PersistedDocuments | null {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw) as PersistedDocuments;
+      if (!parsed || typeof parsed.schemaVersion !== 'number') return null;
+      // migration hook (if future versions need changes)
+      if (parsed.schemaVersion !== STORAGE_SCHEMA_VERSION) {
+        const migrated = this.migrateStorage(parsed);
+        this.persistToStorage(migrated.docs, migrated.versions);
+        return migrated;
+      }
+      return parsed;
+    } catch (e) {
+      console.warn('Failed to parse persisted documents:', e);
+      return null;
+    }
+  }
+
+  private migrateStorage(old: PersistedDocuments): PersistedDocuments {
+    // Simple migration scaffold: currently only schemaVersion 1 exists.
+    // If older versions appear, transform them here.
+    // For now, drop-through and upgrade version number.
+    console.info('Migrating persisted mock documents from schema', old.schemaVersion, 'to', STORAGE_SCHEMA_VERSION);
+    const migrated: PersistedDocuments = {
+      schemaVersion: STORAGE_SCHEMA_VERSION,
+      docs: old.docs || [],
+      versions: old.versions || [],
+      persistedAt: new Date().toISOString()
+    };
+    return migrated;
+  }
+
+  private persistToStorage(docs: Document[], versions: DocumentVersion[]) {
+    try {
+      const payload: PersistedDocuments = { schemaVersion: STORAGE_SCHEMA_VERSION, docs, versions, persistedAt: new Date().toISOString() };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (e) {
+      console.warn('Failed to persist mock documents to localStorage:', e);
     }
   }
 
@@ -96,6 +168,9 @@ export class DocumentsApiService {
         this.generatePreviewFromFile(file, ver);
       }
 
+      // persist after mutation
+      this.persistToStorage(this.docs$.value || [], this.versions$.value || []);
+
       return of(newDoc);
     }
     return this.http.post<Document>(`${environment.apiUrl}/documents`, payload);
@@ -108,6 +183,8 @@ export class DocumentsApiService {
       const updatedDocs = docs.map((d) => (d.id === id ? { ...d, ...payload, updatedAt: new Date().toISOString() } : d));
       this.docs$.next(updatedDocs);
       const updated = updatedDocs.find((d) => d.id === id)!;
+      // persist
+      this.persistToStorage(this.docs$.value || [], this.versions$.value || []);
       return of(updated);
     }
     return this.http.put<Document>(`${environment.apiUrl}/documents/${id}`, payload);
@@ -125,6 +202,8 @@ export class DocumentsApiService {
       this.docs$.next(updatedDocs);
       // generate preview for uploaded file
       this.generatePreviewFromFile(file, ver);
+      // persist
+      this.persistToStorage(this.docs$.value || [], this.versions$.value || []);
       return of(ver);
     }
     // real API would be a multipart/form-data upload
@@ -140,6 +219,8 @@ export class DocumentsApiService {
       this.docs$.next((this.docs$.value || []).filter((d) => d.id !== id));
       // also remove versions
       this.versions$.next((this.versions$.value || []).filter((v) => v.documentId !== id));
+      // persist
+      this.persistToStorage(this.docs$.value || [], this.versions$.value || []);
       return of({ success: true });
     }
     return this.http.delete<any>(`${environment.apiUrl}/documents/${id}`);
@@ -210,6 +291,8 @@ export class DocumentsApiService {
           ver.previewBase64 = `data:${ver.mimeType};base64,${b64}`;
           ver.isPreviewAvailable = true;
           this.updateVersion(ver);
+          // persist
+          this.persistToStorage(this.docs$.value || [], this.versions$.value || []);
         },
         error: () => {
           // ignore preview failure
@@ -230,6 +313,8 @@ export class DocumentsApiService {
       // Optionally set storageUrl to data URL for download
       ver.storageUrl = ver.previewBase64;
       this.updateVersion(ver);
+      // persist
+      this.persistToStorage(this.docs$.value || [], this.versions$.value || []);
     }).catch(() => {
       // ignore errors
     });
