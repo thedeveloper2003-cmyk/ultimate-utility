@@ -34,4 +34,5 @@ export interface DocumentVersion {
   createdAt: string;
   notes?: string;
   isPreviewAvailable?: boolean;
+  previewBase64?: string | null; // base64 preview data for small files (images, PDFs)
 }

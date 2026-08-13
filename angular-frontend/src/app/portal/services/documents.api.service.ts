@@ -1,25 +1,244 @@
-  create(payload: any) {
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of, from } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Document, DocumentVersion } from '../models/document.model';
+import { map, switchMap } from 'rxjs/operators';
+
+const PREVIEW_MAX_BYTES = 1 * 1024 * 1024; // 1 MB
+const PREVIEW_MIME_WHITELIST = [
+  'image/png',
+  'image/jpeg',
+  'image/jpg',
+  'application/pdf'
+];
+
+@Injectable({ providedIn: 'root' })
+export class DocumentsApiService {
+  private docs$ = new BehaviorSubject<Document[] | null>(null);
+  private versions$ = new BehaviorSubject<DocumentVersion[] | null>(null);
+
+  constructor(private http: HttpClient) {}
+
+  // Initialize seed data for docs and versions if not yet populated
+  private ensureSeedsLoaded(): void {
+    if (!this.docs$.value) {
+      // try loading seed JSON from assets
+      this.http.get<Document[]>('/assets/mock-data/documents.json').subscribe(
+        (d) => this.docs$.next(d || []),
+        () => this.docs$.next([]),
+      );
+    }
+    if (!this.versions$.value) {
+      this.http.get<DocumentVersion[]>('/assets/mock-data/document-versions.json').subscribe(
+        (v) => {
+          // attempt to generate previews for small files
+          (v || []).forEach((ver) => { ver.isPreviewAvailable = false; ver.previewBase64 = null; });
+          this.versions$.next(v || []);
+          // for each version eligible, kick off async preview generation
+          (v || []).forEach((ver) => this.maybeGeneratePreviewForVersion(ver));
+        },
+        () => this.versions$.next([]),
+      );
+    }
+  }
+
+  // Public API
+  loadAll(): Observable<Document[] | null> {
+    this.ensureSeedsLoaded();
+    return this.docs$.asObservable();
+  }
+
+  getById(id: string): Observable<Document | null> {
+    this.ensureSeedsLoaded();
+    return this.docs$.pipe(map((docs) => (docs || []).find((d) => d.id === id) || null));
+  }
+
+  loadVersions(documentId: string): Observable<DocumentVersion[] | null> {
+    this.ensureSeedsLoaded();
+    return this.versions$.pipe(map((vers) => (vers || []).filter((v) => v.documentId === documentId)));
+  }
+
+  getVersion(documentId: string, versionId: string): Observable<DocumentVersion | null> {
+    this.ensureSeedsLoaded();
+    return this.versions$.pipe(map((vers) => (vers || []).find((v) => v.documentId === documentId && v.id === versionId) || null));
+  }
+
+  create(payload: Partial<Document>, file?: File): Observable<Document> {
     if (!environment.apiUrl) {
-      const newDoc = { ...payload, id: `doc-${Date.now()}`, updatedAt: new Date().toISOString() };
-      this.docs$.next([...(this.docs$.value || []), newDoc]);
+      this.ensureSeedsLoaded();
+      const newDoc: Document = {
+        id: `doc-${Date.now()}`,
+        title: payload.title || 'Untitled Document',
+        description: payload.description || '',
+        category: payload.category || 'General',
+        visibility: payload.visibility || 'private',
+        projectId: payload.projectId || null,
+        taskId: payload.taskId || null,
+        ownerId: payload.ownerId || 'emp-unknown',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        latestVersionId: null,
+        tags: payload.tags || [],
+        status: payload.status || 'active'
+      };
+      const docs = this.docs$.value || [];
+      this.docs$.next([...docs, newDoc]);
+
+      if (file) {
+        // create initial version
+        const ver = this.createVersionRecord(newDoc.id, file, newDoc.ownerId);
+        this.addVersion(ver);
+        newDoc.latestVersionId = ver.id;
+        newDoc.updatedAt = ver.createdAt;
+        this.emitDocsUpdate(newDoc);
+      }
+
       return of(newDoc);
     }
-    return this.http.post<any>(`${environment.apiUrl}/documents`, payload);
+    return this.http.post<Document>(`${environment.apiUrl}/documents`, payload);
   }
 
-  update(id: string, payload: any) {
+  update(id: string, payload: Partial<Document>): Observable<Document> {
     if (!environment.apiUrl) {
-      const updated = { ...payload, id };
-      this.docs$.next((this.docs$.value || []).map(d => d.id === id ? updated : d));
+      this.ensureSeedsLoaded();
+      const docs = this.docs$.value || [];
+      const updatedDocs = docs.map((d) => (d.id === id ? { ...d, ...payload, updatedAt: new Date().toISOString() } : d));
+      this.docs$.next(updatedDocs);
+      const updated = updatedDocs.find((d) => d.id === id)!;
       return of(updated);
     }
-    return this.http.put<any>(`${environment.apiUrl}/documents/${id}`, payload);
+    return this.http.put<Document>(`${environment.apiUrl}/documents/${id}`, payload);
   }
 
-  delete(id: string) {
+  uploadVersion(documentId: string, file: File, notes?: string): Observable<DocumentVersion> {
     if (!environment.apiUrl) {
-      this.docs$.next((this.docs$.value || []).filter(d => d.id !== id));
+      this.ensureSeedsLoaded();
+      const ownerId = 'emp-unknown';
+      const ver = this.createVersionRecord(documentId, file, ownerId, notes);
+      this.addVersion(ver);
+      // update document latestVersionId
+      const docs = this.docs$.value || [];
+      const updatedDocs = docs.map((d) => (d.id === documentId ? { ...d, latestVersionId: ver.id, updatedAt: ver.createdAt } : d));
+      this.docs$.next(updatedDocs);
+      return of(ver);
+    }
+    // real API would be a multipart/form-data upload
+    const form = new FormData();
+    form.append('file', file);
+    if (notes) form.append('notes', notes);
+    return this.http.post<DocumentVersion>(`${environment.apiUrl}/documents/${documentId}/versions`, form);
+  }
+
+  delete(id: string): Observable<any> {
+    if (!environment.apiUrl) {
+      this.ensureSeedsLoaded();
+      this.docs$.next((this.docs$.value || []).filter((d) => d.id !== id));
+      // also remove versions
+      this.versions$.next((this.versions$.value || []).filter((v) => v.documentId !== id));
       return of({ success: true });
     }
     return this.http.delete<any>(`${environment.apiUrl}/documents/${id}`);
   }
+
+  // Download version (mock returns storageUrl or base64 string)
+  downloadVersion(versionId: string): Observable<string | null> {
+    this.ensureSeedsLoaded();
+    const v = (this.versions$.value || []).find((x) => x.id === versionId);
+    if (!v) return of(null);
+    if (v.previewBase64) return of(v.previewBase64);
+    if (v.storageUrl) return of(v.storageUrl);
+    return of(null);
+  }
+
+  // Helpers
+  private createVersionRecord(documentId: string, file: File, createdBy: string, notes?: string): DocumentVersion {
+    const id = `ver-${Date.now()}`;
+    const createdAt = new Date().toISOString();
+    const ver: DocumentVersion = {
+      id,
+      documentId,
+      versionNumber: (this.getLatestVersionNumber(documentId) || 0) + 1,
+      fileName: file.name,
+      mimeType: file.type || 'application/octet-stream',
+      size: file.size,
+      checksum: undefined,
+      storageUrl: undefined,
+      createdBy,
+      createdAt,
+      notes: notes || ''
+    };
+    // for mock-mode, create a storageUrl as a local data URL for small files or leave undefined
+    // We'll attempt to generate a base64 preview if eligible, and set storageUrl to a data URL for small files
+    if (file.size <= PREVIEW_MAX_BYTES && PREVIEW_MIME_WHITELIST.includes(file.type)) {
+      // read file to base64 synchronously via FileReader in async helper later
+      // we'll set previewBase64 via async method
+    }
+    // Persisting file content to data URL is optional; we rely on previewBase64 for preview and storageUrl remains undefined
+    return ver;
+  }
+
+  private addVersion(ver: DocumentVersion) {
+    const arr = this.versions$.value || [];
+    this.versions$.next([...arr, ver]);
+    // try to generate preview for the version (if storageUrl exists or mime/size allow)
+    this.maybeGeneratePreviewForVersion(ver);
+  }
+
+  private getLatestVersionNumber(documentId: string): number | null {
+    const vers = this.versions$.value || [];
+    const docVers = vers.filter((v) => v.documentId === documentId);
+    if (!docVers.length) return null;
+    return Math.max(...docVers.map((v) => v.versionNumber || 1));
+  }
+
+  private emitDocsUpdate(updatedDoc: Document) {
+    const docs = this.docs$.value || [];
+    const next = docs.map((d) => (d.id === updatedDoc.id ? updatedDoc : d));
+    this.docs$.next(next);
+  }
+
+  private maybeGeneratePreviewForVersion(ver: DocumentVersion) {
+    // if preview already available, skip
+    if (ver.previewBase64) return;
+    // If we have a storageUrl and it's an asset (startsWith '/assets'), try to fetch and convert
+    if (ver.storageUrl && PREVIEW_MIME_WHITELIST.includes(ver.mimeType)) {
+      // fetch blob and convert
+      this.http.get(ver.storageUrl, { responseType: 'blob' }).pipe(
+        switchMap((blob) => from(this.blobToBase64(blob).then((b64) => ({ blob, b64 })) ))
+      ).subscribe({
+        next: ({ b64 }) => {
+          ver.previewBase64 = `data:${ver.mimeType};base64,${b64}`;
+          ver.isPreviewAvailable = true;
+          this.updateVersion(ver);
+        },
+        error: () => {
+          // ignore preview failure
+        }
+      });
+      return;
+    }
+    // No storageUrl; preview may be created later when file uploaded (we need file object to convert)
+  }
+
+  private updateVersion(ver: DocumentVersion) {
+    const arr = this.versions$.value || [];
+    const updated = arr.map((v) => (v.id === ver.id ? ver : v));
+    this.versions$.next(updated);
+  }
+
+  private blobToBase64(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const dataUrl = reader.result as string;
+        // dataUrl = 'data:<mime>;base64,<data>' -- we want only base64
+        const idx = dataUrl.indexOf(',');
+        if (idx >= 0) resolve(dataUrl.slice(idx + 1));
+        else resolve('');
+      };
+      reader.onerror = (e) => reject(e);
+      reader.readAsDataURL(blob);
+    });
+  }
+}
