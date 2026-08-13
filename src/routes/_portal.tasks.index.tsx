@@ -46,7 +46,7 @@ function TasksPage() {
   const projects = usePortal((s) => s.projects);
   const employees = usePortal((s) => s.employees);
   const me = usePortal((s) => s.session?.employeeId ?? "");
-  const canCreate = usePortal((s) => hasPermission(s, "task:create"));
+  const canCreate = usePortal((s) => hasPermission(s, "TASK_CREATE"));
 
   const [tab, setTab] = useState<"open" | "today" | "overdue" | "completed" | "all">("open");
   const [query, setQuery] = useState("");
