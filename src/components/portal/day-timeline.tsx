@@ -4,6 +4,8 @@ import { CalendarDays, ChevronLeft, ChevronRight, Coffee, LogOut, Play } from "l
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "./primitives";
 import { fmtDuration, fmtTime } from "@/lib/portal/store";
+
+const niceDur = (m: number) => (m < 60 ? `${m}m` : m % 60 === 0 ? `${m / 60}hr` : `${Math.floor(m / 60)}h ${m % 60}m`);
 import type { TimelineBlock } from "@/lib/portal/types";
 
 const TONE: Record<string, { bar: string; ring: string; chip: string }> = {
@@ -108,7 +110,7 @@ export function DayTimeline({
                 {hours.map((h, i) => (
                   <span
                     key={i}
-                    className="tabular absolute -translate-x-1/2 text-[10px] font-medium text-muted-foreground"
+                    className={`tabular absolute text-[10px] font-medium text-muted-foreground ${i === 0 ? "" : "-translate-x-1/2"}`}
                     style={{ left: `${((differenceInMinutes(h, startOfDay(h)) - startMin) / Math.max(1, endMin - startMin)) * 100}%` }}
                   >
                     {format(h, "h:mm a")}
@@ -136,7 +138,7 @@ export function DayTimeline({
                           {fmtTime(b.startTime)} – {fmtTime(b.endTime)}
                         </span>
                         <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${tone.chip}`}>
-                          {mins > 0 ? fmtDuration(mins) : b.type}
+                          {mins > 0 ? niceDur(mins) : b.type}
                         </span>
                       </div>
                     </button>
