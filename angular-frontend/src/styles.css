@@ -2,5 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* PrimeNG theme and core css */
+@import "primeng/resources/themes/lara-light-indigo/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "primeicons/primeicons.css";
+
 /* Add any global app styles below */
 body { @apply bg-gray-50 text-gray-800; }

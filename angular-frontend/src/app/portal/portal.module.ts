@@ -29,6 +29,18 @@ import { PortalTimelineComponent } from './timeline/portal-timeline.component';
 import { PortalRequestsIndexComponent } from './requests/portal-requests-index.component';
 import { PortalRequestComponent } from './requests/portal-request.component';
 
+// New components
+import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { SectionCardComponent } from './components/section-card/section-card.component';
+import { EmptyStateComponent } from './components/empty-state/empty-state.component';
+import { StatusBadgeComponent } from './components/status-badge/status-badge.component';
+import { TimelineViewComponent } from './components/timeline-view/timeline-view.component';
+import { TaskCardComponent } from './components/task-card/task-card.component';
+import { MeetingCardComponent } from './components/meeting-card/meeting-card.component';
+import { ProjectCardComponent } from './components/project-card/project-card.component';
+
+import { SharedModule } from '../shared/shared.module';
+
 const routes: Routes = [
   { path: '', component: PortalShellComponent, children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -38,7 +50,6 @@ const routes: Routes = [
       { path: 'approvals', component: PortalApprovalsComponent },
       { path: 'attendance', component: PortalAttendanceComponent },
       { path: 'calendar', component: PortalCalendarComponent },
-      { path: 'dashboard', component: PortalDashboardComponent },
       { path: 'help', component: PortalHelpComponent },
       { path: 'knowledge', component: PortalKnowledgeComponent },
       { path: 'notes', component: PortalNotesComponent },
@@ -91,8 +102,18 @@ const routes: Routes = [
     PortalTeamComponent,
     PortalTimelineComponent,
     PortalRequestsIndexComponent,
-    PortalRequestComponent
+    PortalRequestComponent,
+
+    // New
+    PageHeaderComponent,
+    SectionCardComponent,
+    EmptyStateComponent,
+    StatusBadgeComponent,
+    TimelineViewComponent,
+    TaskCardComponent,
+    MeetingCardComponent,
+    ProjectCardComponent
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)]
+  imports: [CommonModule, SharedModule, RouterModule.forChild(routes)]
 })
 export class PortalModule {}

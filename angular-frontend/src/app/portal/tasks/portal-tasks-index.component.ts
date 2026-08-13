@@ -1,20 +1,23 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TasksApiService } from '../services/tasks.api.service';
 
 @Component({
   selector: 'app-portal-tasks-index',
   template: `
-    <div>
-      <h3 class="text-2xl font-bold mb-4">Tasks</h3>
-      <ul class="space-y-2">
-        <li *ngFor="let t of tasks" class="p-2 bg-white border rounded">{{ t.title }}</li>
-      </ul>
+    <div class="p-4">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold">Tasks</h2>
+        <a routerLink="/portal/tasks/new" class="text-sm text-blue-600">New task</a>
+      </div>
+
+      <app-table-adapter [rows]="(tasks$ | async) || []"></app-table-adapter>
     </div>
   `
 })
 export class PortalTasksIndexComponent {
-  tasks = [
-    { id: 1, title: 'Task A' },
-    { id: 2, title: 'Task B' },
-    { id: 3, title: 'Task C' }
-  ];
+  tasks$: Observable<any[] | null>;
+  constructor(private api: TasksApiService) {
+    this.tasks$ = this.api.loadAll();
+  }
 }

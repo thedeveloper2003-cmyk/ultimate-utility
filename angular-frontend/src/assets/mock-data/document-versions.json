@@ -1,0 +1,28 @@
+[
+  {
+    "id": "ver-2001",
+    "documentId": "doc-1001",
+    "versionNumber": 2,
+    "fileName": "Project-Phoenix-Requirements-v2.pdf",
+    "mimeType": "application/pdf",
+    "size": 234567,
+    "checksum": "e3b0c44298fc1c149afbf4c8996fb924",
+    "storageUrl": "/assets/mock-files/Project-Phoenix-Requirements-v2.pdf",
+    "createdBy": "emp-1",
+    "createdAt": "2026-02-03T10:20:00Z",
+    "notes": "Updated scope section"
+  },
+  {
+    "id": "ver-2002",
+    "documentId": "doc-1002",
+    "versionNumber": 1,
+    "fileName": "team-onboarding-checklist.docx",
+    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "size": 45312,
+    "checksum": "d2d2c44298fc1c149afbf4c8996fb999",
+    "storageUrl": "/assets/mock-files/team-onboarding-checklist.docx",
+    "createdBy": "emp-2",
+    "createdAt": "2026-01-12T08:00:00Z",
+    "notes": "Initial upload"
+  }
+]
