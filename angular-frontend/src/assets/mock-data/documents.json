@@ -1,0 +1,30 @@
+[
+  {
+    "id": "doc-1001",
+    "title": "Project Phoenix - Requirements",
+    "description": "Requirements document for Project Phoenix",
+    "category": "Project Document",
+    "visibility": "project",
+    "projectId": "proj-1",
+    "ownerId": "emp-1",
+    "createdAt": "2026-02-01T09:15:00Z",
+    "updatedAt": "2026-02-03T10:20:00Z",
+    "latestVersionId": "ver-2001",
+    "tags": ["requirements","project-phoenix"],
+    "status": "active"
+  },
+  {
+    "id": "doc-1002",
+    "title": "Team Onboarding Checklist",
+    "description": "Checklist for onboarding new team members",
+    "category": "Template",
+    "visibility": "team",
+    "projectId": null,
+    "ownerId": "emp-2",
+    "createdAt": "2026-01-12T08:00:00Z",
+    "updatedAt": "2026-01-12T08:00:00Z",
+    "latestVersionId": "ver-2002",
+    "tags": ["onboarding","hr","template"],
+    "status": "active"
+  }
+]
