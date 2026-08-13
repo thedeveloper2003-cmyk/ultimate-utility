@@ -1,31 +1,25 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-
-@Injectable({ providedIn: 'root' })
-export class DocumentsApiService {
-  private docs$ = new BehaviorSubject<any[] | null>(null);
-  constructor(private http: HttpClient) {}
-
-  loadAll(): Observable<any[] | null> {
+  create(payload: any) {
     if (!environment.apiUrl) {
-      if (!this.docs$.value) {
-        setTimeout(() => this.docs$.next([
-          { id: 'doc-1', title: 'Project Plan', updatedAt: new Date().toISOString() },
-          { id: 'doc-2', title: 'Roadmap', updatedAt: new Date().toISOString() }
-        ]), 150);
-      }
-      return this.docs$.asObservable();
+      const newDoc = { ...payload, id: `doc-${Date.now()}`, updatedAt: new Date().toISOString() };
+      this.docs$.next([...(this.docs$.value || []), newDoc]);
+      return of(newDoc);
     }
-    return this.http.get<any[]>(`${environment.apiUrl}/documents`);
+    return this.http.post<any>(`${environment.apiUrl}/documents`, payload);
   }
 
-  getById(id: string): Observable<any> {
+  update(id: string, payload: any) {
     if (!environment.apiUrl) {
-      const found = (this.docs$.value || []).find(d => d.id === id);
-      return of(found || null);
+      const updated = { ...payload, id };
+      this.docs$.next((this.docs$.value || []).map(d => d.id === id ? updated : d));
+      return of(updated);
     }
-    return this.http.get<any>(`${environment.apiUrl}/documents/${id}`);
+    return this.http.put<any>(`${environment.apiUrl}/documents/${id}`, payload);
   }
-}
+
+  delete(id: string) {
+    if (!environment.apiUrl) {
+      this.docs$.next((this.docs$.value || []).filter(d => d.id !== id));
+      return of({ success: true });
+    }
+    return this.http.delete<any>(`${environment.apiUrl}/documents/${id}`);
+  }

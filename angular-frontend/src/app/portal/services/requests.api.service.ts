@@ -1,47 +1,25 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-
-@Injectable({ providedIn: 'root' })
-export class RequestsApiService {
-  private requests$ = new BehaviorSubject<any[] | null>(null);
-  constructor(private http: HttpClient) {}
-
-  loadAll(): Observable<any[] | null> {
+  create(payload: any) {
     if (!environment.apiUrl) {
-      if (!this.requests$.value) {
-        setTimeout(() => this.requests$.next([
-          { id: 'req-1', title: 'Time Off', status: 'Pending', requesterId: '1' },
-          { id: 'req-2', title: 'Equipment', status: 'Resolved', requesterId: '2' }
-        ]), 150);
-      }
-      return this.requests$.asObservable();
+      const newReq = { ...payload, id: `req-${Date.now()}` };
+      this.requests$.next([...(this.requests$.value || []), newReq]);
+      return of(newReq);
     }
-    return this.http.get<any[]>(`${environment.apiUrl}/requests`);
+    return this.http.post<any>(`${environment.apiUrl}/requests`, payload);
   }
 
-  getById(id: string): Observable<any> {
+  update(id: string, payload: any) {
     if (!environment.apiUrl) {
-      const found = (this.requests$.value || []).find(r => r.id === id);
-      return of(found || null);
+      const updated = { ...payload, id };
+      this.requests$.next((this.requests$.value || []).map(r => r.id === id ? updated : r));
+      return of(updated);
     }
-    return this.http.get<any>(`${environment.apiUrl}/requests/${id}`);
+    return this.http.put<any>(`${environment.apiUrl}/requests/${id}`, payload);
   }
 
-  approve(id: string): Observable<any> {
+  delete(id: string) {
     if (!environment.apiUrl) {
-      this.requests$.next((this.requests$.value || []).map(r => r.id === id ? { ...r, status: 'Resolved' } : r));
+      this.requests$.next((this.requests$.value || []).filter(r => r.id !== id));
       return of({ success: true });
     }
-    return this.http.post<any>(`${environment.apiUrl}/requests/${id}/approve`, {});
+    return this.http.delete<any>(`${environment.apiUrl}/requests/${id}`);
   }
-
-  reject(id: string): Observable<any> {
-    if (!environment.apiUrl) {
-      this.requests$.next((this.requests$.value || []).map(r => r.id === id ? { ...r, status: 'Rejected' } : r));
-      return of({ success: true });
-    }
-    return this.http.post<any>(`${environment.apiUrl}/requests/${id}/reject`, {});
-  }
-}

@@ -1,31 +1,25 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-
-@Injectable({ providedIn: 'root' })
-export class MeetingsApiService {
-  private meetings$ = new BehaviorSubject<any[] | null>(null);
-  constructor(private http: HttpClient) {}
-
-  loadAll(): Observable<any[] | null> {
+  create(payload: any) {
     if (!environment.apiUrl) {
-      if (!this.meetings$.value) {
-        setTimeout(() => this.meetings$.next([
-          { meetingId: 'm1', title: 'All Hands', date: new Date().toISOString().slice(0,10), startTime: '09:00', organizerId: '1', participantIds: ['1'] },
-          { meetingId: 'm2', title: 'Project Sync', date: new Date().toISOString().slice(0,10), startTime: '11:00', organizerId: '2', participantIds: ['1','2'] }
-        ]), 150);
-      }
-      return this.meetings$.asObservable();
+      const newMeeting = { ...payload, meetingId: `m${Date.now()}` };
+      this.meetings$.next([...(this.meetings$.value || []), newMeeting]);
+      return of(newMeeting);
     }
-    return this.http.get<any[]>(`${environment.apiUrl}/meetings`);
+    return this.http.post<any>(`${environment.apiUrl}/meetings`, payload);
   }
 
-  getById(id: string): Observable<any> {
+  update(id: string, payload: any) {
     if (!environment.apiUrl) {
-      const found = (this.meetings$.value || []).find(m => m.meetingId === id);
-      return of(found || null);
+      const updated = { ...payload, meetingId: id };
+      this.meetings$.next((this.meetings$.value || []).map(m => m.meetingId === id ? updated : m));
+      return of(updated);
     }
-    return this.http.get<any>(`${environment.apiUrl}/meetings/${id}`);
+    return this.http.put<any>(`${environment.apiUrl}/meetings/${id}`, payload);
   }
-}
+
+  delete(id: string) {
+    if (!environment.apiUrl) {
+      this.meetings$.next((this.meetings$.value || []).filter(m => m.meetingId !== id));
+      return of({ success: true });
+    }
+    return this.http.delete<any>(`${environment.apiUrl}/meetings/${id}`);
+  }
