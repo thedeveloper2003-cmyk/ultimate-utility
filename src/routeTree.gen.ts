@@ -10,33 +10,370 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PortalRouteImport } from './routes/_portal'
+import { Route as PortalActivityRouteImport } from './routes/_portal.activity'
+import { Route as PortalAnnouncementsRouteImport } from './routes/_portal.announcements'
+import { Route as PortalApprovalsRouteImport } from './routes/_portal.approvals'
+import { Route as PortalAttendanceRouteImport } from './routes/_portal.attendance'
+import { Route as PortalCalendarRouteImport } from './routes/_portal.calendar'
+import { Route as PortalDashboardRouteImport } from './routes/_portal.dashboard'
+import { Route as PortalHelpRouteImport } from './routes/_portal.help'
+import { Route as PortalKnowledgeRouteImport } from './routes/_portal.knowledge'
+import { Route as PortalNotesRouteImport } from './routes/_portal.notes'
+import { Route as PortalNotificationsRouteImport } from './routes/_portal.notifications'
+import { Route as PortalOrganizationRouteImport } from './routes/_portal.organization'
+import { Route as PortalProfileRouteImport } from './routes/_portal.profile'
+import { Route as PortalRecognitionRouteImport } from './routes/_portal.recognition'
+import { Route as PortalRemindersRouteImport } from './routes/_portal.reminders'
+import { Route as PortalSettingsRouteImport } from './routes/_portal.settings'
+import { Route as PortalTeamRouteImport } from './routes/_portal.team'
+import { Route as PortalTimelineRouteImport } from './routes/_portal.timeline'
+import { Route as PortalDocumentsIndexRouteImport } from './routes/_portal.documents.index'
+import { Route as PortalDocumentsDocumentIdRouteImport } from './routes/_portal.documents.$documentId'
+import { Route as PortalMeetingsIndexRouteImport } from './routes/_portal.meetings.index'
+import { Route as PortalMeetingsMeetingIdRouteImport } from './routes/_portal.meetings.$meetingId'
+import { Route as PortalProjectsIndexRouteImport } from './routes/_portal.projects.index'
+import { Route as PortalProjectsProjectIdRouteImport } from './routes/_portal.projects.$projectId'
+import { Route as PortalRequestsIndexRouteImport } from './routes/_portal.requests.index'
+import { Route as PortalRequestsRequestIdRouteImport } from './routes/_portal.requests.$requestId'
+import { Route as PortalTasksIndexRouteImport } from './routes/_portal.tasks.index'
+import { Route as PortalTasksTaskIdRouteImport } from './routes/_portal.tasks.$taskId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/_portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalActivityRoute = PortalActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalAnnouncementsRoute = PortalAnnouncementsRouteImport.update({
+  id: '/announcements',
+  path: '/announcements',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalApprovalsRoute = PortalApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalAttendanceRoute = PortalAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCalendarRoute = PortalCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalDashboardRoute = PortalDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalHelpRoute = PortalHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalKnowledgeRoute = PortalKnowledgeRouteImport.update({
+  id: '/knowledge',
+  path: '/knowledge',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalNotesRoute = PortalNotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalNotificationsRoute = PortalNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalOrganizationRoute = PortalOrganizationRouteImport.update({
+  id: '/organization',
+  path: '/organization',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalProfileRoute = PortalProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalRecognitionRoute = PortalRecognitionRouteImport.update({
+  id: '/recognition',
+  path: '/recognition',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalRemindersRoute = PortalRemindersRouteImport.update({
+  id: '/reminders',
+  path: '/reminders',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalSettingsRoute = PortalSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalTeamRoute = PortalTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalTimelineRoute = PortalTimelineRouteImport.update({
+  id: '/timeline',
+  path: '/timeline',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalDocumentsIndexRoute = PortalDocumentsIndexRouteImport.update({
+  id: '/documents/',
+  path: '/documents/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalDocumentsDocumentIdRoute =
+  PortalDocumentsDocumentIdRouteImport.update({
+    id: '/documents/$documentId',
+    path: '/documents/$documentId',
+    getParentRoute: () => PortalRoute,
+  } as any)
+const PortalMeetingsIndexRoute = PortalMeetingsIndexRouteImport.update({
+  id: '/meetings/',
+  path: '/meetings/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalMeetingsMeetingIdRoute = PortalMeetingsMeetingIdRouteImport.update({
+  id: '/meetings/$meetingId',
+  path: '/meetings/$meetingId',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalProjectsIndexRoute = PortalProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalProjectsProjectIdRoute = PortalProjectsProjectIdRouteImport.update({
+  id: '/projects/$projectId',
+  path: '/projects/$projectId',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalRequestsIndexRoute = PortalRequestsIndexRouteImport.update({
+  id: '/requests/',
+  path: '/requests/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalRequestsRequestIdRoute = PortalRequestsRequestIdRouteImport.update({
+  id: '/requests/$requestId',
+  path: '/requests/$requestId',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalTasksIndexRoute = PortalTasksIndexRouteImport.update({
+  id: '/tasks/',
+  path: '/tasks/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalTasksTaskIdRoute = PortalTasksTaskIdRouteImport.update({
+  id: '/tasks/$taskId',
+  path: '/tasks/$taskId',
+  getParentRoute: () => PortalRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activity': typeof PortalActivityRoute
+  '/announcements': typeof PortalAnnouncementsRoute
+  '/approvals': typeof PortalApprovalsRoute
+  '/attendance': typeof PortalAttendanceRoute
+  '/calendar': typeof PortalCalendarRoute
+  '/dashboard': typeof PortalDashboardRoute
+  '/help': typeof PortalHelpRoute
+  '/knowledge': typeof PortalKnowledgeRoute
+  '/notes': typeof PortalNotesRoute
+  '/notifications': typeof PortalNotificationsRoute
+  '/organization': typeof PortalOrganizationRoute
+  '/profile': typeof PortalProfileRoute
+  '/recognition': typeof PortalRecognitionRoute
+  '/reminders': typeof PortalRemindersRoute
+  '/settings': typeof PortalSettingsRoute
+  '/team': typeof PortalTeamRoute
+  '/timeline': typeof PortalTimelineRoute
+  '/documents/$documentId': typeof PortalDocumentsDocumentIdRoute
+  '/meetings/$meetingId': typeof PortalMeetingsMeetingIdRoute
+  '/projects/$projectId': typeof PortalProjectsProjectIdRoute
+  '/requests/$requestId': typeof PortalRequestsRequestIdRoute
+  '/tasks/$taskId': typeof PortalTasksTaskIdRoute
+  '/documents/': typeof PortalDocumentsIndexRoute
+  '/meetings/': typeof PortalMeetingsIndexRoute
+  '/projects/': typeof PortalProjectsIndexRoute
+  '/requests/': typeof PortalRequestsIndexRoute
+  '/tasks/': typeof PortalTasksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activity': typeof PortalActivityRoute
+  '/announcements': typeof PortalAnnouncementsRoute
+  '/approvals': typeof PortalApprovalsRoute
+  '/attendance': typeof PortalAttendanceRoute
+  '/calendar': typeof PortalCalendarRoute
+  '/dashboard': typeof PortalDashboardRoute
+  '/help': typeof PortalHelpRoute
+  '/knowledge': typeof PortalKnowledgeRoute
+  '/notes': typeof PortalNotesRoute
+  '/notifications': typeof PortalNotificationsRoute
+  '/organization': typeof PortalOrganizationRoute
+  '/profile': typeof PortalProfileRoute
+  '/recognition': typeof PortalRecognitionRoute
+  '/reminders': typeof PortalRemindersRoute
+  '/settings': typeof PortalSettingsRoute
+  '/team': typeof PortalTeamRoute
+  '/timeline': typeof PortalTimelineRoute
+  '/documents/$documentId': typeof PortalDocumentsDocumentIdRoute
+  '/meetings/$meetingId': typeof PortalMeetingsMeetingIdRoute
+  '/projects/$projectId': typeof PortalProjectsProjectIdRoute
+  '/requests/$requestId': typeof PortalRequestsRequestIdRoute
+  '/tasks/$taskId': typeof PortalTasksTaskIdRoute
+  '/documents': typeof PortalDocumentsIndexRoute
+  '/meetings': typeof PortalMeetingsIndexRoute
+  '/projects': typeof PortalProjectsIndexRoute
+  '/requests': typeof PortalRequestsIndexRoute
+  '/tasks': typeof PortalTasksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_portal': typeof PortalRouteWithChildren
+  '/_portal/activity': typeof PortalActivityRoute
+  '/_portal/announcements': typeof PortalAnnouncementsRoute
+  '/_portal/approvals': typeof PortalApprovalsRoute
+  '/_portal/attendance': typeof PortalAttendanceRoute
+  '/_portal/calendar': typeof PortalCalendarRoute
+  '/_portal/dashboard': typeof PortalDashboardRoute
+  '/_portal/help': typeof PortalHelpRoute
+  '/_portal/knowledge': typeof PortalKnowledgeRoute
+  '/_portal/notes': typeof PortalNotesRoute
+  '/_portal/notifications': typeof PortalNotificationsRoute
+  '/_portal/organization': typeof PortalOrganizationRoute
+  '/_portal/profile': typeof PortalProfileRoute
+  '/_portal/recognition': typeof PortalRecognitionRoute
+  '/_portal/reminders': typeof PortalRemindersRoute
+  '/_portal/settings': typeof PortalSettingsRoute
+  '/_portal/team': typeof PortalTeamRoute
+  '/_portal/timeline': typeof PortalTimelineRoute
+  '/_portal/documents/$documentId': typeof PortalDocumentsDocumentIdRoute
+  '/_portal/meetings/$meetingId': typeof PortalMeetingsMeetingIdRoute
+  '/_portal/projects/$projectId': typeof PortalProjectsProjectIdRoute
+  '/_portal/requests/$requestId': typeof PortalRequestsRequestIdRoute
+  '/_portal/tasks/$taskId': typeof PortalTasksTaskIdRoute
+  '/_portal/documents/': typeof PortalDocumentsIndexRoute
+  '/_portal/meetings/': typeof PortalMeetingsIndexRoute
+  '/_portal/projects/': typeof PortalProjectsIndexRoute
+  '/_portal/requests/': typeof PortalRequestsIndexRoute
+  '/_portal/tasks/': typeof PortalTasksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/activity'
+    | '/announcements'
+    | '/approvals'
+    | '/attendance'
+    | '/calendar'
+    | '/dashboard'
+    | '/help'
+    | '/knowledge'
+    | '/notes'
+    | '/notifications'
+    | '/organization'
+    | '/profile'
+    | '/recognition'
+    | '/reminders'
+    | '/settings'
+    | '/team'
+    | '/timeline'
+    | '/documents/$documentId'
+    | '/meetings/$meetingId'
+    | '/projects/$projectId'
+    | '/requests/$requestId'
+    | '/tasks/$taskId'
+    | '/documents/'
+    | '/meetings/'
+    | '/projects/'
+    | '/requests/'
+    | '/tasks/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/activity'
+    | '/announcements'
+    | '/approvals'
+    | '/attendance'
+    | '/calendar'
+    | '/dashboard'
+    | '/help'
+    | '/knowledge'
+    | '/notes'
+    | '/notifications'
+    | '/organization'
+    | '/profile'
+    | '/recognition'
+    | '/reminders'
+    | '/settings'
+    | '/team'
+    | '/timeline'
+    | '/documents/$documentId'
+    | '/meetings/$meetingId'
+    | '/projects/$projectId'
+    | '/requests/$requestId'
+    | '/tasks/$taskId'
+    | '/documents'
+    | '/meetings'
+    | '/projects'
+    | '/requests'
+    | '/tasks'
+  id:
+    | '__root__'
+    | '/'
+    | '/_portal'
+    | '/_portal/activity'
+    | '/_portal/announcements'
+    | '/_portal/approvals'
+    | '/_portal/attendance'
+    | '/_portal/calendar'
+    | '/_portal/dashboard'
+    | '/_portal/help'
+    | '/_portal/knowledge'
+    | '/_portal/notes'
+    | '/_portal/notifications'
+    | '/_portal/organization'
+    | '/_portal/profile'
+    | '/_portal/recognition'
+    | '/_portal/reminders'
+    | '/_portal/settings'
+    | '/_portal/team'
+    | '/_portal/timeline'
+    | '/_portal/documents/$documentId'
+    | '/_portal/meetings/$meetingId'
+    | '/_portal/projects/$projectId'
+    | '/_portal/requests/$requestId'
+    | '/_portal/tasks/$taskId'
+    | '/_portal/documents/'
+    | '/_portal/meetings/'
+    | '/_portal/projects/'
+    | '/_portal/requests/'
+    | '/_portal/tasks/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PortalRoute: typeof PortalRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +385,271 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_portal': {
+      id: '/_portal'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_portal/activity': {
+      id: '/_portal/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof PortalActivityRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/announcements': {
+      id: '/_portal/announcements'
+      path: '/announcements'
+      fullPath: '/announcements'
+      preLoaderRoute: typeof PortalAnnouncementsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/approvals': {
+      id: '/_portal/approvals'
+      path: '/approvals'
+      fullPath: '/approvals'
+      preLoaderRoute: typeof PortalApprovalsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/attendance': {
+      id: '/_portal/attendance'
+      path: '/attendance'
+      fullPath: '/attendance'
+      preLoaderRoute: typeof PortalAttendanceRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/calendar': {
+      id: '/_portal/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof PortalCalendarRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/dashboard': {
+      id: '/_portal/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof PortalDashboardRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/help': {
+      id: '/_portal/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof PortalHelpRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/knowledge': {
+      id: '/_portal/knowledge'
+      path: '/knowledge'
+      fullPath: '/knowledge'
+      preLoaderRoute: typeof PortalKnowledgeRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/notes': {
+      id: '/_portal/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof PortalNotesRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/notifications': {
+      id: '/_portal/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof PortalNotificationsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/organization': {
+      id: '/_portal/organization'
+      path: '/organization'
+      fullPath: '/organization'
+      preLoaderRoute: typeof PortalOrganizationRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/profile': {
+      id: '/_portal/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof PortalProfileRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/recognition': {
+      id: '/_portal/recognition'
+      path: '/recognition'
+      fullPath: '/recognition'
+      preLoaderRoute: typeof PortalRecognitionRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/reminders': {
+      id: '/_portal/reminders'
+      path: '/reminders'
+      fullPath: '/reminders'
+      preLoaderRoute: typeof PortalRemindersRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/settings': {
+      id: '/_portal/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof PortalSettingsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/team': {
+      id: '/_portal/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof PortalTeamRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/timeline': {
+      id: '/_portal/timeline'
+      path: '/timeline'
+      fullPath: '/timeline'
+      preLoaderRoute: typeof PortalTimelineRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/documents/': {
+      id: '/_portal/documents/'
+      path: '/documents'
+      fullPath: '/documents/'
+      preLoaderRoute: typeof PortalDocumentsIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/documents/$documentId': {
+      id: '/_portal/documents/$documentId'
+      path: '/documents/$documentId'
+      fullPath: '/documents/$documentId'
+      preLoaderRoute: typeof PortalDocumentsDocumentIdRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/meetings/': {
+      id: '/_portal/meetings/'
+      path: '/meetings'
+      fullPath: '/meetings/'
+      preLoaderRoute: typeof PortalMeetingsIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/meetings/$meetingId': {
+      id: '/_portal/meetings/$meetingId'
+      path: '/meetings/$meetingId'
+      fullPath: '/meetings/$meetingId'
+      preLoaderRoute: typeof PortalMeetingsMeetingIdRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/projects/': {
+      id: '/_portal/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof PortalProjectsIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/projects/$projectId': {
+      id: '/_portal/projects/$projectId'
+      path: '/projects/$projectId'
+      fullPath: '/projects/$projectId'
+      preLoaderRoute: typeof PortalProjectsProjectIdRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/requests/': {
+      id: '/_portal/requests/'
+      path: '/requests'
+      fullPath: '/requests/'
+      preLoaderRoute: typeof PortalRequestsIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/requests/$requestId': {
+      id: '/_portal/requests/$requestId'
+      path: '/requests/$requestId'
+      fullPath: '/requests/$requestId'
+      preLoaderRoute: typeof PortalRequestsRequestIdRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/tasks/': {
+      id: '/_portal/tasks/'
+      path: '/tasks'
+      fullPath: '/tasks/'
+      preLoaderRoute: typeof PortalTasksIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/_portal/tasks/$taskId': {
+      id: '/_portal/tasks/$taskId'
+      path: '/tasks/$taskId'
+      fullPath: '/tasks/$taskId'
+      preLoaderRoute: typeof PortalTasksTaskIdRouteImport
+      parentRoute: typeof PortalRoute
+    }
   }
 }
 
+interface PortalRouteChildren {
+  PortalActivityRoute: typeof PortalActivityRoute
+  PortalAnnouncementsRoute: typeof PortalAnnouncementsRoute
+  PortalApprovalsRoute: typeof PortalApprovalsRoute
+  PortalAttendanceRoute: typeof PortalAttendanceRoute
+  PortalCalendarRoute: typeof PortalCalendarRoute
+  PortalDashboardRoute: typeof PortalDashboardRoute
+  PortalHelpRoute: typeof PortalHelpRoute
+  PortalKnowledgeRoute: typeof PortalKnowledgeRoute
+  PortalNotesRoute: typeof PortalNotesRoute
+  PortalNotificationsRoute: typeof PortalNotificationsRoute
+  PortalOrganizationRoute: typeof PortalOrganizationRoute
+  PortalProfileRoute: typeof PortalProfileRoute
+  PortalRecognitionRoute: typeof PortalRecognitionRoute
+  PortalRemindersRoute: typeof PortalRemindersRoute
+  PortalSettingsRoute: typeof PortalSettingsRoute
+  PortalTeamRoute: typeof PortalTeamRoute
+  PortalTimelineRoute: typeof PortalTimelineRoute
+  PortalDocumentsDocumentIdRoute: typeof PortalDocumentsDocumentIdRoute
+  PortalMeetingsMeetingIdRoute: typeof PortalMeetingsMeetingIdRoute
+  PortalProjectsProjectIdRoute: typeof PortalProjectsProjectIdRoute
+  PortalRequestsRequestIdRoute: typeof PortalRequestsRequestIdRoute
+  PortalTasksTaskIdRoute: typeof PortalTasksTaskIdRoute
+  PortalDocumentsIndexRoute: typeof PortalDocumentsIndexRoute
+  PortalMeetingsIndexRoute: typeof PortalMeetingsIndexRoute
+  PortalProjectsIndexRoute: typeof PortalProjectsIndexRoute
+  PortalRequestsIndexRoute: typeof PortalRequestsIndexRoute
+  PortalTasksIndexRoute: typeof PortalTasksIndexRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalActivityRoute: PortalActivityRoute,
+  PortalAnnouncementsRoute: PortalAnnouncementsRoute,
+  PortalApprovalsRoute: PortalApprovalsRoute,
+  PortalAttendanceRoute: PortalAttendanceRoute,
+  PortalCalendarRoute: PortalCalendarRoute,
+  PortalDashboardRoute: PortalDashboardRoute,
+  PortalHelpRoute: PortalHelpRoute,
+  PortalKnowledgeRoute: PortalKnowledgeRoute,
+  PortalNotesRoute: PortalNotesRoute,
+  PortalNotificationsRoute: PortalNotificationsRoute,
+  PortalOrganizationRoute: PortalOrganizationRoute,
+  PortalProfileRoute: PortalProfileRoute,
+  PortalRecognitionRoute: PortalRecognitionRoute,
+  PortalRemindersRoute: PortalRemindersRoute,
+  PortalSettingsRoute: PortalSettingsRoute,
+  PortalTeamRoute: PortalTeamRoute,
+  PortalTimelineRoute: PortalTimelineRoute,
+  PortalDocumentsDocumentIdRoute: PortalDocumentsDocumentIdRoute,
+  PortalMeetingsMeetingIdRoute: PortalMeetingsMeetingIdRoute,
+  PortalProjectsProjectIdRoute: PortalProjectsProjectIdRoute,
+  PortalRequestsRequestIdRoute: PortalRequestsRequestIdRoute,
+  PortalTasksTaskIdRoute: PortalTasksTaskIdRoute,
+  PortalDocumentsIndexRoute: PortalDocumentsIndexRoute,
+  PortalMeetingsIndexRoute: PortalMeetingsIndexRoute,
+  PortalProjectsIndexRoute: PortalProjectsIndexRoute,
+  PortalRequestsIndexRoute: PortalRequestsIndexRoute,
+  PortalTasksIndexRoute: PortalTasksIndexRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PortalRoute: PortalRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
