@@ -163,7 +163,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-border bg-card px-3 sm:px-4">
+        <header className="surface-glass sticky top-0 z-30 flex h-14 items-center gap-2 rounded-none border-x-0 border-t-0 px-3 sm:px-4">
           <Sheet open={mobileNav} onOpenChange={setMobileNav}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open navigation">
