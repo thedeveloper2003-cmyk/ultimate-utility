@@ -62,6 +62,7 @@ import { DocumentVersion } from '../models/document.model';
 export class PortalDocumentComponent implements OnInit {
   doc: any = null;
   selectedFile: string | null = null;
+  selectedFileObj: File | null = null;
   versions: DocumentVersion[] = [];
   previewData: string | null = null; // data URL
   previewMime: string | null = null;
@@ -77,17 +78,34 @@ export class PortalDocumentComponent implements OnInit {
   }
 
   onFile(e: any) {
-    const f = e.target.files && e.target.files[0];
-    if (f) this.selectedFile = f.name;
+    const f: File | undefined = e.target.files && e.target.files[0];
+    if (f) {
+      this.selectedFile = f.name;
+      this.selectedFileObj = f;
+      // generate immediate preview for images/pdf if allowed
+      if ((f.size <= 1 * 1024 * 1024) && (f.type === 'application/pdf' || f.type.startsWith('image/'))) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.previewData = reader.result as string;
+          this.previewMime = f.type;
+        };
+        reader.readAsDataURL(f);
+      }
+    }
   }
 
   save() {
     const payload: any = { title: this.doc?.title || 'New document', updatedAt: new Date().toISOString() };
     const id = this.route.snapshot.paramMap.get('documentId');
     if (id && id !== 'new') {
-      this.api.update(id, payload).subscribe(() => this.router.navigate(['/portal/documents']));
+      if (this.selectedFileObj) {
+        this.api.uploadVersion(id, this.selectedFileObj, 'Uploaded new version').subscribe(() => this.router.navigate(['/portal/documents']));
+      } else {
+        this.api.update(id, payload).subscribe(() => this.router.navigate(['/portal/documents']));
+      }
     } else {
-      this.api.create(payload).subscribe(() => this.router.navigate(['/portal/documents']));
+      // create new document; include file if present
+      this.api.create({ title: payload.title, ownerId: 'emp-unknown' }, this.selectedFileObj || undefined).subscribe(() => this.router.navigate(['/portal/documents']));
     }
   }
 

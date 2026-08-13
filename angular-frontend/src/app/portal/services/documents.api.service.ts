@@ -92,6 +92,8 @@ export class DocumentsApiService {
         newDoc.latestVersionId = ver.id;
         newDoc.updatedAt = ver.createdAt;
         this.emitDocsUpdate(newDoc);
+        // generate preview from the uploaded file
+        this.generatePreviewFromFile(file, ver);
       }
 
       return of(newDoc);
@@ -121,6 +123,8 @@ export class DocumentsApiService {
       const docs = this.docs$.value || [];
       const updatedDocs = docs.map((d) => (d.id === documentId ? { ...d, latestVersionId: ver.id, updatedAt: ver.createdAt } : d));
       this.docs$.next(updatedDocs);
+      // generate preview for uploaded file
+      this.generatePreviewFromFile(file, ver);
       return of(ver);
     }
     // real API would be a multipart/form-data upload
@@ -166,15 +170,10 @@ export class DocumentsApiService {
       storageUrl: undefined,
       createdBy,
       createdAt,
-      notes: notes || ''
+      notes: notes || '',
+      isPreviewAvailable: false,
+      previewBase64: null
     };
-    // for mock-mode, create a storageUrl as a local data URL for small files or leave undefined
-    // We'll attempt to generate a base64 preview if eligible, and set storageUrl to a data URL for small files
-    if (file.size <= PREVIEW_MAX_BYTES && PREVIEW_MIME_WHITELIST.includes(file.type)) {
-      // read file to base64 synchronously via FileReader in async helper later
-      // we'll set previewBase64 via async method
-    }
-    // Persisting file content to data URL is optional; we rely on previewBase64 for preview and storageUrl remains undefined
     return ver;
   }
 
@@ -221,6 +220,21 @@ export class DocumentsApiService {
     // No storageUrl; preview may be created later when file uploaded (we need file object to convert)
   }
 
+  private generatePreviewFromFile(file: File, ver: DocumentVersion) {
+    if (!PREVIEW_MIME_WHITELIST.includes(ver.mimeType) || ver.size > PREVIEW_MAX_BYTES) {
+      return;
+    }
+    this.fileToBase64(file).then((b64) => {
+      ver.previewBase64 = `data:${ver.mimeType};base64,${b64}`;
+      ver.isPreviewAvailable = true;
+      // Optionally set storageUrl to data URL for download
+      ver.storageUrl = ver.previewBase64;
+      this.updateVersion(ver);
+    }).catch(() => {
+      // ignore errors
+    });
+  }
+
   private updateVersion(ver: DocumentVersion) {
     const arr = this.versions$.value || [];
     const updated = arr.map((v) => (v.id === ver.id ? ver : v));
@@ -232,13 +246,26 @@ export class DocumentsApiService {
       const reader = new FileReader();
       reader.onloadend = () => {
         const dataUrl = reader.result as string;
-        // dataUrl = 'data:<mime>;base64,<data>' -- we want only base64
         const idx = dataUrl.indexOf(',');
         if (idx >= 0) resolve(dataUrl.slice(idx + 1));
         else resolve('');
       };
       reader.onerror = (e) => reject(e);
       reader.readAsDataURL(blob);
+    });
+  }
+
+  private fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        const idx = dataUrl.indexOf(',');
+        if (idx >= 0) resolve(dataUrl.slice(idx + 1));
+        else resolve('');
+      };
+      reader.onerror = (e) => reject(e);
+      reader.readAsDataURL(file);
     });
   }
 }
