@@ -176,30 +176,68 @@
 }
 
 
+@theme inline {
+  --color-primary-glow: var(--primary-glow);
+}
+
 @layer base {
   html {
     font-family: var(--font-sans);
   }
+  body {
+    background-image:
+      radial-gradient(1100px 520px at 12% -8%, color-mix(in oklab, var(--primary) 12%, transparent), transparent 70%),
+      radial-gradient(900px 460px at 92% 4%, color-mix(in oklab, var(--primary-glow) 12%, transparent), transparent 72%);
+    background-attachment: fixed;
+  }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.011em;
+    letter-spacing: -0.014em;
   }
   .tabular {
     font-variant-numeric: tabular-nums;
   }
+  ::selection {
+    background-color: color-mix(in oklab, var(--primary) 26%, transparent);
+  }
 }
 
 @utility surface-card {
+  background-image: var(--gradient-surface);
   background-color: var(--color-card);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 1px 2px oklch(0.2 0.02 253 / 6%);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+@utility surface-glass {
+  background-color: color-mix(in oklab, var(--color-card) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--color-border) 80%, transparent);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+}
+
+@utility lift-hover {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+  }
+}
+
+@utility gradient-text {
+  background-image: var(--gradient-primary);
+  background-clip: text;
+  color: transparent;
 }
 
 @utility page-title {
-  font-size: 1.375rem;
-  line-height: 1.75rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.9rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
   color: var(--color-foreground);
 }
 
@@ -210,3 +248,4 @@
   text-transform: uppercase;
   color: var(--color-muted-foreground);
 }
+
