@@ -62,9 +62,13 @@ export function DayTimeline({
     return { hours: marks, startMin: s, endMin: e };
   }, [sorted]);
 
-  const login = sorted.find((b) => b.type === "LOGIN");
-  const brk = sorted.find((b) => b.type === "BREAK");
-  const logout = sorted.length ? sorted[sorted.length - 1] : undefined;
+  const loginBlock = sorted.find((b) => b.type === "LOGIN");
+  const lastBlock = sorted.length ? sorted[sorted.length - 1] : undefined;
+  const startAt = markers?.checkIn ?? loginBlock?.startTime ?? null;
+  const lunchAt = markers?.lunchStart ?? sorted.find((b) => b.type === "BREAK")?.startTime ?? null;
+  const logoutAt = markers?.logout ?? markers?.expected ?? lastBlock?.endTime ?? null;
+  const logoutProjected = !markers?.logout;
+
   const totalWidth = Math.max((endMin - startMin) * PX_PER_MIN, sorted.length * MIN_WIDTH);
 
   const scrollBy = (dir: number) => scroller.current?.scrollBy({ left: dir * 420, behavior: "smooth" });
