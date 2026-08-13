@@ -4,6 +4,7 @@ import { CalendarDays, ChevronLeft, ChevronRight, Coffee, LogOut, Play } from "l
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "./primitives";
 import { fmtDuration, fmtTime } from "@/lib/portal/store";
+import type { AttendanceMarkers } from "@/lib/portal/store";
 
 const niceDur = (m: number) => (m < 60 ? `${m}m` : m % 60 === 0 ? `${m / 60}hr` : `${Math.floor(m / 60)}h ${m % 60}m`);
 import type { TimelineBlock } from "@/lib/portal/types";
@@ -33,12 +34,14 @@ export function DayTimeline({
   onChangeDate,
   selectedId,
   onSelect,
+  markers,
 }: {
   date: Date;
   blocks: TimelineBlock[];
   onChangeDate: (d: Date) => void;
   selectedId?: string | undefined;
   onSelect?: ((b: TimelineBlock) => void) | undefined;
+  markers?: AttendanceMarkers | undefined;
 }) {
   const scroller = useRef<HTMLDivElement>(null);
 
@@ -62,9 +65,13 @@ export function DayTimeline({
     return { hours: marks, startMin: s, endMin: e };
   }, [sorted]);
 
-  const login = sorted.find((b) => b.type === "LOGIN");
-  const brk = sorted.find((b) => b.type === "BREAK");
-  const logout = sorted.length ? sorted[sorted.length - 1] : undefined;
+  const loginBlock = sorted.find((b) => b.type === "LOGIN");
+  const lastBlock = sorted.length ? sorted[sorted.length - 1] : undefined;
+  const startAt = markers?.checkIn ?? loginBlock?.startTime ?? null;
+  const lunchAt = markers?.lunchStart ?? sorted.find((b) => b.type === "BREAK")?.startTime ?? null;
+  const logoutAt = markers?.logout ?? markers?.expected ?? lastBlock?.endTime ?? null;
+  const logoutProjected = !markers?.logout;
+
   const totalWidth = Math.max((endMin - startMin) * PX_PER_MIN, sorted.length * MIN_WIDTH);
 
   const scrollBy = (dir: number) => scroller.current?.scrollBy({ left: dir * 420, behavior: "smooth" });
@@ -83,9 +90,17 @@ export function DayTimeline({
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <Marker icon={<Play className="h-3.5 w-3.5" />} label={`Start ${fmtTime(login?.startTime)}`} tone="text-info" />
-          <Marker icon={<Coffee className="h-3.5 w-3.5" />} label={`Lunch ${fmtTime(brk?.startTime)}`} tone="text-warning" />
-          <Marker icon={<LogOut className="h-3.5 w-3.5" />} label={`Logout ${fmtTime(logout?.endTime)}`} tone="text-success" />
+          <Marker icon={<Play className="h-3.5 w-3.5" />} label={`Start ${fmtTime(startAt)}`} tone="text-info" />
+          <Marker
+            icon={<Coffee className="h-3.5 w-3.5" />}
+            label={lunchAt ? `Lunch ${fmtTime(lunchAt)}${markers?.breakMinutes ? ` · ${markers.breakMinutes}m` : ""}` : "Lunch not recorded"}
+            tone="text-warning"
+          />
+          <Marker
+            icon={<LogOut className="h-3.5 w-3.5" />}
+            label={`${logoutProjected ? "Expected out" : "Logout"} ${fmtTime(logoutAt)}`}
+            tone="text-success"
+          />
           <div className="flex items-center rounded-md border border-border">
             <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Previous day" onClick={() => onChangeDate(addDays(date, -1))}>
               <ChevronLeft className="h-4 w-4" />

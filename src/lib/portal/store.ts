@@ -553,3 +553,53 @@ export function globalSearch(s: PortalState, query: string) {
 }
 
 export { CURRENT_EMPLOYEE_ID, WORK_HOURS, dateKey, ROLE_PERMISSIONS };
+
+/* ---------------- attendance markers ---------------- */
+
+/**
+ * Real recorded day markers (check-in, lunch, logout) taken from the
+ * attendance record for `key`, with the timeline break block used for the
+ * lunch window. Falls back to the live session / expected completion time
+ * when a value has not been recorded yet.
+ */
+export function attendanceMarkers(s: PortalState, key: string) {
+  const employeeId = s.session?.employeeId ?? CURRENT_EMPLOYEE_ID;
+  const att = attendanceFor(s, key);
+  const isToday = key === dateKey(new Date());
+
+  const breaks = s.timeline
+    .filter((b) => b.date === key && b.employeeId === employeeId && b.type === "BREAK")
+    .sort((a, b) => a.startTime.localeCompare(b.startTime));
+  const lunch = breaks[0] ?? null;
+
+  const checkIn = att?.checkInTime ?? (isToday ? s.session?.loginTime ?? null : null);
+  const logout = att?.actualLogoutTime ?? null;
+  const expected =
+    att?.expectedCompletionTime ??
+    (checkIn ? addMinutes(parseISO(checkIn), WORK_HOURS * 60).toISOString() : null);
+
+  const recordedBreak = att?.breakDurationMinutes ?? 0;
+  const breakMinutes = recordedBreak > 0
+    ? recordedBreak
+    : lunch ? Math.max(0, differenceInMinutes(parseISO(lunch.endTime), parseISO(lunch.startTime))) : 0;
+
+  const workedMinutes = att?.workDurationMinutes && att.workDurationMinutes > 0
+    ? att.workDurationMinutes
+    : checkIn ? workProgress(checkIn, logout ? parseISO(logout) : new Date()).workedMinutes : 0;
+
+  return {
+    attendance: att,
+    checkIn,
+    lunchStart: lunch?.startTime ?? null,
+    lunchEnd: lunch?.endTime ?? null,
+    breakMinutes,
+    logout,
+    expected,
+    projected: !logout,
+    workedMinutes,
+    status: att?.status ?? null,
+    workStatus: att?.workStatus ?? null,
+  };
+}
+
+export type AttendanceMarkers = ReturnType<typeof attendanceMarkers>;
