@@ -11,9 +11,9 @@ import { attendanceMarkers, currentEmployee, dateKey, fmtDuration, fmtTime, useP
 export const Route = createFileRoute("/_portal/timeline")({
   head: () => ({
     meta: [
-      { title: "Daily Timeline — Nexora Employee Portal" },
+      { title: "Daily Timeline — Protechsoft Employee Portal" },
       { name: "description", content: "Hour-by-hour view of your working day with real check-in, lunch and logout times from attendance." },
-      { property: "og:title", content: "Daily Timeline — Nexora Employee Portal" },
+      { property: "og:title", content: "Daily Timeline — Protechsoft Employee Portal" },
       { property: "og:description", content: "Hour-by-hour view of your working day with real recorded attendance times." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

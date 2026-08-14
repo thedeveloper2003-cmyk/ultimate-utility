@@ -9,9 +9,9 @@ import { currentEmployee, fmtDateTime, usePortal } from "@/lib/portal/store";
 export const Route = createFileRoute("/_portal/activity")({
   head: () => ({
     meta: [
-      { title: "Activity & Audit — Nexora Employee Portal" },
+      { title: "Activity & Audit — Protechsoft Employee Portal" },
       { name: "description", content: "Every action you take in the portal, plus the immutable audit trail of value changes and sessions." },
-      { property: "og:title", content: "Activity & Audit — Nexora Employee Portal" },
+      { property: "og:title", content: "Activity & Audit — Protechsoft Employee Portal" },
       { property: "og:description", content: "Your portal activity feed and audit trail." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -10,9 +10,9 @@ import { currentEmployee, fmtTime, usePortal } from "@/lib/portal/store";
 export const Route = createFileRoute("/_portal/team")({
   head: () => ({
     meta: [
-      { title: "My Team — Nexora Employee Portal" },
+      { title: "My Team — Protechsoft Employee Portal" },
       { name: "description", content: "Your immediate team: presence, skills, workload and today's meetings for every colleague." },
-      { property: "og:title", content: "My Team — Nexora Employee Portal" },
+      { property: "og:title", content: "My Team — Protechsoft Employee Portal" },
       { property: "og:description", content: "Team presence, skills and current workload." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -7,14 +7,15 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ShieldCheck, Clock, LogIn } from "lucide-react";
 import { hydratePortal, login, usePortal } from "@/lib/portal/store";
 import { toast } from "sonner";
+import logoAsset from "@/assets/protechsoft-logo.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sign in — Nexora Employee Portal" },
-      { name: "description", content: "Secure sign-in to the Nexora employee portal for attendance, tasks, meetings and workplace services." },
-      { property: "og:title", content: "Sign in — Nexora Employee Portal" },
-      { property: "og:description", content: "Secure sign-in to the Nexora employee portal for attendance, tasks, meetings and workplace services." },
+      { title: "Sign in — Protechsoft Employee Portal" },
+      { name: "description", content: "Secure sign-in to the Protechsoft employee portal for attendance, tasks, meetings and workplace services." },
+      { property: "og:title", content: "Sign in — Protechsoft Employee Portal" },
+      { property: "og:description", content: "Secure sign-in to the Protechsoft employee portal for attendance, tasks, meetings and workplace services." },
     ],
   }),
   component: LoginPage,
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/")({
 function LoginPage() {
   const navigate = useNavigate();
   const session = usePortal((s) => s.session);
-  const [identifier, setIdentifier] = useState("arun.prakash@nexora.com");
+  const [identifier, setIdentifier] = useState("arun.prakash@protechsoft.com");
   const [password, setPassword] = useState("Portal@123");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
@@ -54,8 +55,8 @@ function LoginPage() {
     <div className="grid min-h-screen lg:grid-cols-2">
       <section className="hidden flex-col justify-between bg-sidebar p-10 text-sidebar-foreground lg:flex">
         <div className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground">N</span>
-          <span className="text-sm font-semibold">Nexora Workspace</span>
+          <img src={logoAsset.url} alt="Protechsoft logo" className="h-9 w-9 rounded-md object-contain" />
+          <span className="text-sm font-semibold">Protechsoft Workspace</span>
         </div>
         <div className="max-w-md space-y-4">
           <h2 className="text-3xl leading-tight font-semibold">One workspace for your entire working day.</h2>
@@ -67,7 +68,7 @@ function LoginPage() {
             <li className="flex items-center gap-2"><ShieldCheck className="h-4 w-4" aria-hidden /> Role-based access to enterprise modules</li>
           </ul>
         </div>
-        <p className="text-xs text-sidebar-foreground/50">© {new Date().getFullYear()} Nexora Technologies</p>
+        <p className="text-xs text-sidebar-foreground/50">© {new Date().getFullYear()} Protechsoft Technologies</p>
       </section>
 
       <main className="flex items-center justify-center px-4 py-12">
@@ -99,7 +100,7 @@ function LoginPage() {
           </form>
 
           <p className="mt-6 text-xs text-muted-foreground">
-            Demo credentials: <span className="font-medium text-foreground">arun.prakash@nexora.com</span> / <span className="font-medium text-foreground">Portal@123</span>
+            Demo credentials: <span className="font-medium text-foreground">arun.prakash@protechsoft.com</span> / <span className="font-medium text-foreground">Portal@123</span>
           </p>
         </div>
       </main>

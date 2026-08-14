@@ -9,9 +9,9 @@ import { currentEmployee, dateKey, fmtDate, fmtTime, usePortal } from "@/lib/por
 export const Route = createFileRoute("/_portal/meetings/")({
   head: () => ({
     meta: [
-      { title: "Meetings — Nexora Employee Portal" },
+      { title: "Meetings — Protechsoft Employee Portal" },
       { name: "description", content: "Upcoming, today's and past meetings with organiser, participants, agenda and join links." },
-      { property: "og:title", content: "Meetings — Nexora Employee Portal" },
+      { property: "og:title", content: "Meetings — Protechsoft Employee Portal" },
       { property: "og:description", content: "Your meetings with agenda, participants and join links." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -17,9 +17,9 @@ import type { PortalState } from "@/lib/portal/types";
 export const Route = createFileRoute("/_portal/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — Nexora Employee Portal" },
+      { title: "Dashboard — Protechsoft Employee Portal" },
       { name: "description", content: "Your working day at a glance: attendance, tasks, meetings, projects and notifications." },
-      { property: "og:title", content: "Dashboard — Nexora Employee Portal" },
+      { property: "og:title", content: "Dashboard — Protechsoft Employee Portal" },
       { property: "og:description", content: "Your working day at a glance: attendance, tasks, meetings, projects and notifications." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -14,9 +14,9 @@ import { currentEmployee, deleteNote, fmtDateTime, saveNote, toggleNote, usePort
 export const Route = createFileRoute("/_portal/notes")({
   head: () => ({
     meta: [
-      { title: "My Notes — Nexora Employee Portal" },
+      { title: "My Notes — Protechsoft Employee Portal" },
       { name: "description", content: "Capture personal notes, meeting takeaways and drafts. Pin what matters and archive the rest." },
-      { property: "og:title", content: "My Notes — Nexora Employee Portal" },
+      { property: "og:title", content: "My Notes — Protechsoft Employee Portal" },
       { property: "og:description", content: "Personal notes, meeting takeaways and drafts in one place." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -11,9 +11,9 @@ import { fmtDate, usePortal } from "@/lib/portal/store";
 export const Route = createFileRoute("/_portal/knowledge")({
   head: () => ({
     meta: [
-      { title: "Knowledge Base — Nexora Employee Portal" },
+      { title: "Knowledge Base — Protechsoft Employee Portal" },
       { name: "description", content: "Searchable guides, policies and how-to articles with tags, categories and related reading." },
-      { property: "og:title", content: "Knowledge Base — Nexora Employee Portal" },
+      { property: "og:title", content: "Knowledge Base — Protechsoft Employee Portal" },
       { property: "og:description", content: "Guides, policies and how-to articles for employees." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

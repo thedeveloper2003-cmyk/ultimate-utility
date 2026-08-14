@@ -10,9 +10,9 @@ import { usePortal } from "@/lib/portal/store";
 export const Route = createFileRoute("/_portal/help")({
   head: () => ({
     meta: [
-      { title: "Help & Support — Nexora Employee Portal" },
+      { title: "Help & Support — Protechsoft Employee Portal" },
       { name: "description", content: "FAQs, support contacts, escalation paths and shortcuts to raise a request or read a guide." },
-      { property: "og:title", content: "Help & Support — Nexora Employee Portal" },
+      { property: "og:title", content: "Help & Support — Protechsoft Employee Portal" },
       { property: "og:description", content: "FAQs, contacts and escalation paths for employee support." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -31,9 +31,9 @@ const FAQS = [
 ];
 
 const CONTACTS = [
-  { team: "IT Service Desk", detail: "itdesk@nexora.example", phone: "+44 20 7946 0111", hours: "24/7", icon: LifeBuoy },
-  { team: "People & HR", detail: "people@nexora.example", phone: "+44 20 7946 0122", hours: "Mon–Fri, 09:00–18:00", icon: Mail },
-  { team: "Facilities", detail: "facilities@nexora.example", phone: "+44 20 7946 0133", hours: "Mon–Fri, 08:00–19:00", icon: Phone },
+  { team: "IT Service Desk", detail: "itdesk@protechsoft.example", phone: "+44 20 7946 0111", hours: "24/7", icon: LifeBuoy },
+  { team: "People & HR", detail: "people@protechsoft.example", phone: "+44 20 7946 0122", hours: "Mon–Fri, 09:00–18:00", icon: Mail },
+  { team: "Facilities", detail: "facilities@protechsoft.example", phone: "+44 20 7946 0133", hours: "Mon–Fri, 08:00–19:00", icon: Phone },
 ];
 
 function Page() {

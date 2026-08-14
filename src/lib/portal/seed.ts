@@ -32,7 +32,7 @@ export const CURRENT_EMPLOYEE_ID = "EMP-1001";
 const employees: Employee[] = [
   {
     employeeId: "EMP-1001", employeeCode: "NX-1001", firstName: "Arun", lastName: "Prakash",
-    displayName: "Arun Prakash", email: "arun.prakash@nexora.com", password: "Portal@123", phone: "+91 98400 21134",
+    displayName: "Arun Prakash", email: "arun.prakash@protechsoft.com", password: "Portal@123", phone: "+91 98400 21134",
     jobTitle: "Senior Frontend Engineer", department: "Engineering", team: "Web Platform", managerId: "EMP-1004",
     location: "Chennai, IN", timezone: "Asia/Kolkata", workSchedule: "09:00 - 18:00 (Mon-Fri)",
     employmentStatus: "Full-time", accountStatus: "Active", availability: "Available", role: "Employee",
@@ -40,7 +40,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1002", employeeCode: "NX-1002", firstName: "Meera", lastName: "Raghavan",
-    displayName: "Meera Raghavan", email: "meera.raghavan@nexora.com", password: "Portal@123", phone: "+91 98410 55620",
+    displayName: "Meera Raghavan", email: "meera.raghavan@protechsoft.com", password: "Portal@123", phone: "+91 98410 55620",
     jobTitle: "Engineering Team Lead", department: "Engineering", team: "Web Platform", managerId: "EMP-1004",
     location: "Bengaluru, IN", timezone: "Asia/Kolkata", workSchedule: "09:30 - 18:30 (Mon-Fri)",
     employmentStatus: "Full-time", accountStatus: "Active", availability: "In Meeting", role: "Team Lead",
@@ -48,7 +48,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1003", employeeCode: "NX-1003", firstName: "Daniel", lastName: "Okoro",
-    displayName: "Daniel Okoro", email: "daniel.okoro@nexora.com", password: "Portal@123", phone: "+44 7700 900312",
+    displayName: "Daniel Okoro", email: "daniel.okoro@protechsoft.com", password: "Portal@123", phone: "+44 7700 900312",
     jobTitle: "QA Automation Engineer", department: "Quality Engineering", team: "Web Platform", managerId: "EMP-1002",
     location: "London, UK", timezone: "Europe/London", workSchedule: "09:00 - 18:00 (Mon-Fri)",
     employmentStatus: "Full-time", accountStatus: "Active", availability: "Busy", role: "Employee",
@@ -56,7 +56,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1004", employeeCode: "NX-1004", firstName: "Sophia", lastName: "Lindqvist",
-    displayName: "Sophia Lindqvist", email: "sophia.lindqvist@nexora.com", password: "Portal@123", phone: "+46 70 123 4455",
+    displayName: "Sophia Lindqvist", email: "sophia.lindqvist@protechsoft.com", password: "Portal@123", phone: "+46 70 123 4455",
     jobTitle: "Engineering Manager", department: "Engineering", team: "Platform Group", managerId: null,
     location: "Stockholm, SE", timezone: "Europe/Stockholm", workSchedule: "08:30 - 17:30 (Mon-Fri)",
     employmentStatus: "Full-time", accountStatus: "Active", availability: "Available", role: "Manager",
@@ -64,7 +64,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1005", employeeCode: "NX-1005", firstName: "Priya", lastName: "Venkatesh",
-    displayName: "Priya Venkatesh", email: "priya.venkatesh@nexora.com", password: "Portal@123", phone: "+91 98450 77120",
+    displayName: "Priya Venkatesh", email: "priya.venkatesh@protechsoft.com", password: "Portal@123", phone: "+91 98450 77120",
     jobTitle: "Portal Administrator", department: "Corporate IT", team: "Workplace Systems", managerId: "EMP-1004",
     location: "Hyderabad, IN", timezone: "Asia/Kolkata", workSchedule: "10:00 - 19:00 (Mon-Fri)",
     employmentStatus: "Full-time", accountStatus: "Active", availability: "Available", role: "Portal Administrator",
@@ -72,7 +72,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1006", employeeCode: "NX-1006", firstName: "Rafael", lastName: "Moreno",
-    displayName: "Rafael Moreno", email: "rafael.moreno@nexora.com", password: "Portal@123", phone: "+34 611 220 998",
+    displayName: "Rafael Moreno", email: "rafael.moreno@protechsoft.com", password: "Portal@123", phone: "+34 611 220 998",
     jobTitle: "Product Designer", department: "Design", team: "Experience Design", managerId: "EMP-1004",
     location: "Madrid, ES", timezone: "Europe/Madrid", workSchedule: "09:00 - 18:00 (Mon-Fri)",
     employmentStatus: "Full-time", accountStatus: "Inactive", availability: "Offline", role: "Employee",
@@ -80,7 +80,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1007", employeeCode: "NX-1007", firstName: "Hannah", lastName: "Cole",
-    displayName: "Hannah Cole", email: "hannah.cole@nexora.com", password: "Portal@123", phone: "+1 415 555 0198",
+    displayName: "Hannah Cole", email: "hannah.cole@protechsoft.com", password: "Portal@123", phone: "+1 415 555 0198",
     jobTitle: "Technical Writer", department: "Documentation", team: "Content Systems", managerId: "EMP-1002",
     location: "San Francisco, US", timezone: "America/Los_Angeles", workSchedule: "09:00 - 18:00 (Mon-Fri)",
     employmentStatus: "Contract", accountStatus: "Locked", availability: "Offline", role: "Employee",
@@ -88,7 +88,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1008", employeeCode: "NX-1008", firstName: "Vikram", lastName: "Shetty",
-    displayName: "Vikram Shetty", email: "vikram.shetty@nexora.com", password: "Portal@123", phone: "+91 99000 41220",
+    displayName: "Vikram Shetty", email: "vikram.shetty@protechsoft.com", password: "Portal@123", phone: "+91 99000 41220",
     jobTitle: "DevOps Engineer", department: "Platform Engineering", team: "Reliability", managerId: "EMP-1004",
     location: "Pune, IN", timezone: "Asia/Kolkata", workSchedule: "09:00 - 18:00 (Mon-Fri)",
     employmentStatus: "Full-time", accountStatus: "Suspended", availability: "Offline", role: "Employee",
@@ -96,7 +96,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1009", employeeCode: "NX-1009", firstName: "Ayesha", lastName: "Khan",
-    displayName: "Ayesha Khan", email: "ayesha.khan@nexora.com", password: "Portal@123", phone: "+971 50 220 8811",
+    displayName: "Ayesha Khan", email: "ayesha.khan@protechsoft.com", password: "Portal@123", phone: "+971 50 220 8811",
     jobTitle: "Business Analyst", department: "Product", team: "Customer Portal", managerId: "EMP-1004",
     location: "Dubai, AE", timezone: "Asia/Dubai", workSchedule: "09:00 - 18:00 (Sun-Thu)",
     employmentStatus: "Full-time", accountStatus: "Pending Activation", availability: "Offline", role: "Employee",
@@ -104,7 +104,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1010", employeeCode: "NX-1010", firstName: "Tom", lastName: "Bergström",
-    displayName: "Tom Bergström", email: "tom.bergstrom@nexora.com", password: "Portal@123", phone: "+46 70 998 1122",
+    displayName: "Tom Bergström", email: "tom.bergstrom@protechsoft.com", password: "Portal@123", phone: "+46 70 998 1122",
     jobTitle: "Support Engineer", department: "Customer Success", team: "Support Desk", managerId: "EMP-1002",
     location: "Gothenburg, SE", timezone: "Europe/Stockholm", workSchedule: "08:00 - 17:00 (Mon-Fri)",
     employmentStatus: "Full-time", accountStatus: "Deactivated", availability: "Offline", role: "Employee",
@@ -112,7 +112,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1011", employeeCode: "NX-1011", firstName: "Ingrid", lastName: "Nowak",
-    displayName: "Ingrid Nowak", email: "ingrid.nowak@nexora.com", password: "Portal@123", phone: "+48 512 330 771",
+    displayName: "Ingrid Nowak", email: "ingrid.nowak@protechsoft.com", password: "Portal@123", phone: "+48 512 330 771",
     jobTitle: "System Administrator", department: "Corporate IT", team: "Workplace Systems", managerId: "EMP-1005",
     location: "Kraków, PL", timezone: "Europe/Warsaw", workSchedule: "09:00 - 18:00 (Mon-Fri)",
     employmentStatus: "Full-time", accountStatus: "Active", availability: "Away", role: "System Administrator",
@@ -120,7 +120,7 @@ const employees: Employee[] = [
   },
   {
     employeeId: "EMP-1012", employeeCode: "NX-1012", firstName: "Kiran", lastName: "Das",
-    displayName: "Kiran Das", email: "kiran.das@nexora.com", password: "Portal@123", phone: "+91 90030 55411",
+    displayName: "Kiran Das", email: "kiran.das@protechsoft.com", password: "Portal@123", phone: "+91 90030 55411",
     jobTitle: "Junior Frontend Engineer", department: "Engineering", team: "Web Platform", managerId: "EMP-1002",
     location: "Chennai, IN", timezone: "Asia/Kolkata", workSchedule: "09:00 - 18:00 (Mon-Fri)",
     employmentStatus: "Intern", accountStatus: "Active", availability: "Available", role: "Employee",
@@ -255,7 +255,7 @@ function buildMeetings(today: Date, projects: Project[]): Meeting[] {
         startTime: iso(day, startH, 0),
         endTime: iso(day, startH, 45),
         location: seed.loc,
-        meetingLink: "https://meet.nexora.com/" + (5000 + n),
+        meetingLink: "https://meet.protechsoft.com/" + (5000 + n),
         agenda: seed.agenda,
         projectId: pick(projects).projectId as string,
         status: offset < 0 ? "Completed" : "Scheduled",

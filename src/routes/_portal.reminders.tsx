@@ -15,9 +15,9 @@ import type { Priority } from "@/lib/portal/types";
 export const Route = createFileRoute("/_portal/reminders")({
   head: () => ({
     meta: [
-      { title: "Reminders — Nexora Employee Portal" },
+      { title: "Reminders — Protechsoft Employee Portal" },
       { name: "description", content: "Personal reminders for deadlines, follow-ups and mandatory training with priority and due time." },
-      { property: "og:title", content: "Reminders — Nexora Employee Portal" },
+      { property: "og:title", content: "Reminders — Protechsoft Employee Portal" },
       { property: "og:description", content: "Personal reminders for deadlines, follow-ups and training." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

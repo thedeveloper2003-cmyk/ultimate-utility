@@ -10,9 +10,9 @@ import { usePortal } from "@/lib/portal/store";
 export const Route = createFileRoute("/_portal/organization")({
   head: () => ({
     meta: [
-      { title: "Employee Directory — Nexora Employee Portal" },
+      { title: "Employee Directory — Protechsoft Employee Portal" },
       { name: "description", content: "Search the full employee directory by name, department, team or location and see the reporting structure." },
-      { property: "og:title", content: "Employee Directory — Nexora Employee Portal" },
+      { property: "og:title", content: "Employee Directory — Protechsoft Employee Portal" },
       { property: "og:description", content: "Search colleagues across departments, teams and locations." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

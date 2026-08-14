@@ -10,9 +10,9 @@ import { currentEmployee, decideApproval, fmtDateTime, usePortal } from "@/lib/p
 export const Route = createFileRoute("/_portal/approvals")({
   head: () => ({
     meta: [
-      { title: "Approvals — Nexora Employee Portal" },
+      { title: "Approvals — Protechsoft Employee Portal" },
       { name: "description", content: "Approve, reject or request changes on submissions waiting on you, and follow your own submissions." },
-      { property: "og:title", content: "Approvals — Nexora Employee Portal" },
+      { property: "og:title", content: "Approvals — Protechsoft Employee Portal" },
       { property: "og:description", content: "Decide on pending approvals and track your submissions." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

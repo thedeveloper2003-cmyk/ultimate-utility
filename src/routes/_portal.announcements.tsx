@@ -10,9 +10,9 @@ import { currentEmployee, fmtDate, readAnnouncement, usePortal } from "@/lib/por
 export const Route = createFileRoute("/_portal/announcements")({
   head: () => ({
     meta: [
-      { title: "Announcements — Nexora Employee Portal" },
+      { title: "Announcements — Protechsoft Employee Portal" },
       { name: "description", content: "Company, department and policy announcements with priority, publication window and read tracking." },
-      { property: "og:title", content: "Announcements — Nexora Employee Portal" },
+      { property: "og:title", content: "Announcements — Protechsoft Employee Portal" },
       { property: "og:description", content: "Company and department announcements with read tracking." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

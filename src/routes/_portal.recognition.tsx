@@ -14,9 +14,9 @@ import { currentEmployee, fmtDateTime, sendRecognition, usePortal } from "@/lib/
 export const Route = createFileRoute("/_portal/recognition")({
   head: () => ({
     meta: [
-      { title: "Recognition — Nexora Employee Portal" },
+      { title: "Recognition — Protechsoft Employee Portal" },
       { name: "description", content: "Give kudos to colleagues, review the badges you received and see the recognition leaderboard." },
-      { property: "og:title", content: "Recognition — Nexora Employee Portal" },
+      { property: "og:title", content: "Recognition — Protechsoft Employee Portal" },
       { property: "og:description", content: "Kudos, badges and the recognition leaderboard." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
