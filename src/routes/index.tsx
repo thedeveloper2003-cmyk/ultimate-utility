@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ShieldCheck, Clock, LogIn } from "lucide-react";
 import { hydratePortal, login, usePortal } from "@/lib/portal/store";
 import { toast } from "sonner";
+import logoAsset from "@/assets/protechsoft-logo.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -54,7 +55,7 @@ function LoginPage() {
     <div className="grid min-h-screen lg:grid-cols-2">
       <section className="hidden flex-col justify-between bg-sidebar p-10 text-sidebar-foreground lg:flex">
         <div className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground">N</span>
+          <img src={logoAsset.url} alt="Protechsoft logo" className="h-9 w-9 rounded-md object-contain" />
           <span className="text-sm font-semibold">Protechsoft Workspace</span>
         </div>
         <div className="max-w-md space-y-4">

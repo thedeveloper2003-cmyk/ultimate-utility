@@ -6,6 +6,7 @@ import {
   History, Award, LifeBuoy, Settings as SettingsIcon, LogOut, Search, Menu, Clock,
   CalendarClock, UserRound,
 } from "lucide-react";
+import logoAsset from "@/assets/protechsoft-logo.jpg.asset.json";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
