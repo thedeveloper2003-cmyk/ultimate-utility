@@ -6,7 +6,7 @@ import type {
   Permission, PortalState, Priority, Reminder, Settings, Task, TaskStatus, WorkStatus,
 } from "./types";
 
-const STORAGE_KEY = "nexora-employee-portal-v1";
+const STORAGE_KEY = "protechsoft-employee-portal-v1";
 
 let state: PortalState = buildSeedState(new Date());
 let hydrated = false;

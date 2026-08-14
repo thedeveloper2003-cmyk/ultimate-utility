@@ -31,9 +31,9 @@ const FAQS = [
 ];
 
 const CONTACTS = [
-  { team: "IT Service Desk", detail: "itdesk@nexora.example", phone: "+44 20 7946 0111", hours: "24/7", icon: LifeBuoy },
-  { team: "People & HR", detail: "people@nexora.example", phone: "+44 20 7946 0122", hours: "Mon–Fri, 09:00–18:00", icon: Mail },
-  { team: "Facilities", detail: "facilities@nexora.example", phone: "+44 20 7946 0133", hours: "Mon–Fri, 08:00–19:00", icon: Phone },
+  { team: "IT Service Desk", detail: "itdesk@protechsoft.example", phone: "+44 20 7946 0111", hours: "24/7", icon: LifeBuoy },
+  { team: "People & HR", detail: "people@protechsoft.example", phone: "+44 20 7946 0122", hours: "Mon–Fri, 09:00–18:00", icon: Mail },
+  { team: "Facilities", detail: "facilities@protechsoft.example", phone: "+44 20 7946 0133", hours: "Mon–Fri, 08:00–19:00", icon: Phone },
 ];
 
 function Page() {
