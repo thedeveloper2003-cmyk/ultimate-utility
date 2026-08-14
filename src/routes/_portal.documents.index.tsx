@@ -16,9 +16,9 @@ import type { DocumentItem } from "@/lib/portal/types";
 export const Route = createFileRoute("/_portal/documents/")({
   head: () => ({
     meta: [
-      { title: "Documents — Nexora Employee Portal" },
+      { title: "Documents — Protechsoft Employee Portal" },
       { name: "description", content: "Personal, team, project and policy documents with version history, upload and archive." },
-      { property: "og:title", content: "Documents — Nexora Employee Portal" },
+      { property: "og:title", content: "Documents — Protechsoft Employee Portal" },
       { property: "og:description", content: "Documents with version history and category filters." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

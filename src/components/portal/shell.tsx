@@ -62,7 +62,7 @@ function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
     <nav aria-label="Primary" className="flex h-full flex-col gap-5 px-3 py-4">
       <Link to="/dashboard" className="flex items-center gap-2 px-2" onClick={onNavigate}>
         <span className="flex h-8 w-8 items-center justify-center rounded-md bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground">N</span>
-        <span className="text-sm font-semibold text-sidebar-foreground">Nexora Workspace</span>
+        <span className="text-sm font-semibold text-sidebar-foreground">Protechsoft Workspace</span>
       </Link>
       <ScrollArea className="flex-1">
         <div className="space-y-5 pr-2">

@@ -13,9 +13,9 @@ import { currentEmployee, dateKey, fmtDate, usePortal } from "@/lib/portal/store
 export const Route = createFileRoute("/_portal/calendar")({
   head: () => ({
     meta: [
-      { title: "Calendar — Nexora Employee Portal" },
+      { title: "Calendar — Protechsoft Employee Portal" },
       { name: "description", content: "Monthly calendar of your meetings, task deadlines and reminders with a day agenda panel." },
-      { property: "og:title", content: "Calendar — Nexora Employee Portal" },
+      { property: "og:title", content: "Calendar — Protechsoft Employee Portal" },
       { property: "og:description", content: "Meetings, deadlines and reminders in one monthly view." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

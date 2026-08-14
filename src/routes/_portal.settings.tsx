@@ -14,9 +14,9 @@ import type { Availability, Settings } from "@/lib/portal/types";
 export const Route = createFileRoute("/_portal/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — Nexora Employee Portal" },
+      { title: "Settings — Protechsoft Employee Portal" },
       { name: "description", content: "Manage theme, language, timezone, notification preferences, presence privacy and active sessions." },
-      { property: "og:title", content: "Settings — Nexora Employee Portal" },
+      { property: "og:title", content: "Settings — Protechsoft Employee Portal" },
       { property: "og:description", content: "Theme, notifications, privacy and session controls." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

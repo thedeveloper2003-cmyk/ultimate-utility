@@ -16,9 +16,9 @@ import type { EmployeeRequest, Priority } from "@/lib/portal/types";
 export const Route = createFileRoute("/_portal/requests/")({
   head: () => ({
     meta: [
-      { title: "Requests & Support — Nexora Employee Portal" },
+      { title: "Requests & Support — Protechsoft Employee Portal" },
       { name: "description", content: "Raise IT, access, hardware and facility requests and follow their status through resolution." },
-      { property: "og:title", content: "Requests & Support — Nexora Employee Portal" },
+      { property: "og:title", content: "Requests & Support — Protechsoft Employee Portal" },
       { property: "og:description", content: "Raise and track service requests end to end." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

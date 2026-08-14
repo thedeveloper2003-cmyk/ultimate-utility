@@ -15,9 +15,9 @@ import type { WorkStatus } from "@/lib/portal/types";
 export const Route = createFileRoute("/_portal/attendance")({
   head: () => ({
     meta: [
-      { title: "Attendance — Nexora Employee Portal" },
+      { title: "Attendance — Protechsoft Employee Portal" },
       { name: "description", content: "Check-in time, lunch breaks, working hours and attendance history for the last 90 days." },
-      { property: "og:title", content: "Attendance — Nexora Employee Portal" },
+      { property: "og:title", content: "Attendance — Protechsoft Employee Portal" },
       { property: "og:description", content: "Check-in time, lunch breaks, working hours and attendance history." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -10,9 +10,9 @@ import { usePortal } from "@/lib/portal/store";
 export const Route = createFileRoute("/_portal/help")({
   head: () => ({
     meta: [
-      { title: "Help & Support — Nexora Employee Portal" },
+      { title: "Help & Support — Protechsoft Employee Portal" },
       { name: "description", content: "FAQs, support contacts, escalation paths and shortcuts to raise a request or read a guide." },
-      { property: "og:title", content: "Help & Support — Nexora Employee Portal" },
+      { property: "og:title", content: "Help & Support — Protechsoft Employee Portal" },
       { property: "og:description", content: "FAQs, contacts and escalation paths for employee support." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

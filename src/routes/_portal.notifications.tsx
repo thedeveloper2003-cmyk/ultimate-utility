@@ -11,9 +11,9 @@ import { currentEmployee, readAllNotifications, readNotification, usePortal } fr
 export const Route = createFileRoute("/_portal/notifications")({
   head: () => ({
     meta: [
-      { title: "Notifications — Nexora Employee Portal" },
+      { title: "Notifications — Protechsoft Employee Portal" },
       { name: "description", content: "Task, meeting, approval and announcement notifications with read state and direct links to the source record." },
-      { property: "og:title", content: "Notifications — Nexora Employee Portal" },
+      { property: "og:title", content: "Notifications — Protechsoft Employee Portal" },
       { property: "og:description", content: "All portal notifications in one inbox." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

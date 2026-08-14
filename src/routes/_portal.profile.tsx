@@ -9,9 +9,9 @@ import { currentEmployee, fmtDate, permissionsOf, usePortal } from "@/lib/portal
 export const Route = createFileRoute("/_portal/profile")({
   head: () => ({
     meta: [
-      { title: "My Profile — Nexora Employee Portal" },
+      { title: "My Profile — Protechsoft Employee Portal" },
       { name: "description", content: "Your employee record: role, reporting line, work schedule, skills and portal permissions." },
-      { property: "og:title", content: "My Profile — Nexora Employee Portal" },
+      { property: "og:title", content: "My Profile — Protechsoft Employee Portal" },
       { property: "og:description", content: "Your employee record, reporting line, schedule and permissions." },
       { property: "og:type", content: "profile" },
       { name: "twitter:card", content: "summary" },

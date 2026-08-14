@@ -18,9 +18,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/_portal/tasks/")({
   head: () => ({
     meta: [
-      { title: "My Tasks — Nexora Employee Portal" },
+      { title: "My Tasks — Protechsoft Employee Portal" },
       { name: "description", content: "Track, filter and update every task assigned to you across active projects." },
-      { property: "og:title", content: "My Tasks — Nexora Employee Portal" },
+      { property: "og:title", content: "My Tasks — Protechsoft Employee Portal" },
       { property: "og:description", content: "Track, filter and update every task assigned to you across active projects." },
     ],
   }),
